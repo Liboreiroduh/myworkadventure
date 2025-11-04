@@ -74,7 +74,7 @@ services:
       - workadventure-net
 
   back:
-    image: ghcr.io/thecodingmachine/workadventure-back:2.0.0
+    image: ghcr.io/thecodingmachine/workadventure-back:3.8.4
     restart: always
     env_file:
       - ./.env
