@@ -1,5 +1,9 @@
 version: "3.8"
 
+networks:
+  workadventure-net:
+    driver: bridge
+
 services:
   play:
     image: thecodingmachine/workadventure-play:latest
@@ -8,9 +12,9 @@ services:
       - .env
     environment:
       DOMAIN: ${DOMAIN}
-      ROOM_API_URL: ${API_URL}
-      PUSHER_URL: ${PUSHER_URL}
-      MAP_URL: ${MAP_URL}
+      ROOM_API_URL: /api
+      PUSHER_URL: /pusher
+      MAP_URL: /maps
       SECRET_KEY: ${SECRET_KEY}
     depends_on:
       - pusher
@@ -31,8 +35,6 @@ services:
       TURN_USER: ${TURN_USER}
       TURN_PASSWORD: ${TURN_PASSWORD}
       SECRET_KEY: ${SECRET_KEY}
-    depends_on:
-      - coturn
     networks:
       - workadventure-net
 
@@ -44,8 +46,8 @@ services:
     environment:
       DOMAIN: ${DOMAIN}
       SECRET_KEY: ${SECRET_KEY}
-      PUSHER_URL: ${PUSHER_URL}
-      MAP_STORAGE_URL: ${MAP_URL}
+      PUSHER_URL: http://pusher:8080
+      MAP_STORAGE_URL: http://map-storage:80
     depends_on:
       - pusher
     networks:
@@ -57,7 +59,7 @@ services:
     env_file:
       - .env
     environment:
-      BASE_URL: ${MAP_URL}
+      BASE_URL: /maps
     volumes:
       - ../../docker-data/map-storage:/var/www/html/maps
     networks:
@@ -67,14 +69,16 @@ services:
     image: instrumentisto/coturn:latest
     restart: always
     command:
-      - "--no-auth"
-      - "--no-cli"
-      - "--no-tls"
-      - "--no-dtls"
-      - "--listening-port=${TURN_PORT}"
-      - "--purge"
+      - --lt-cred-mech
+      - --fingerprint
+      - --realm=${DOMAIN}
+      - --user=${TURN_USER}:${TURN_PASSWORD}
+      - --listening-port=${TURN_PORT}
+      - --no-tls
+      - --no-dtls
     ports:
       - "${TURN_PORT}:${TURN_PORT}/udp"
+      - "${TURN_PORT}:${TURN_PORT}/tcp"
     networks:
       - workadventure-net
 
@@ -94,7 +98,3 @@ services:
       - ../../docker-data/nginx/logs:/var/log/nginx
     networks:
       - workadventure-net
-
-networks:
-  workadventure-net:
-    driver: bridge

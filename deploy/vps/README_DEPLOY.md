@@ -36,3 +36,12 @@ newgrp docker
 ```
 
 Depois da instalação, confirme se o plugin do Docker Compose V2 está disponível (`docker compose version`).
+
+- Abrir portas no VPS: TCP 80, TCP 443, UDP 3478 e TCP 3478.
+- Criar diretórios persistentes antes do compose:
+  mkdir -p ../../docker-data/map-storage ../../docker-data/nginx/logs
+- Copiar env:
+  cd deploy/vps && cp .env.example .env && editar valores.
+- Subir stack:
+  docker compose up -d
+- Depois configurar SSL (vamos adicionar Nginx + Certbot em etapa seguinte).
