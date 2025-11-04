@@ -6,7 +6,7 @@ networks:
 
 services:
   play:
-    image: thecodingmachine/workadventure-play:latest
+    image: ghcr.io/workadventure/play:latest
     restart: always
     env_file:
       - .env
@@ -24,7 +24,7 @@ services:
       - workadventure-net
 
   pusher:
-    image: thecodingmachine/workadventure-pusher:latest
+    image: ghcr.io/workadventure/pusher:latest
     restart: always
     env_file:
       - .env
@@ -39,7 +39,7 @@ services:
       - workadventure-net
 
   room-api:
-    image: thecodingmachine/workadventure-room-api:latest
+    image: ghcr.io/workadventure/room-api:latest
     restart: always
     env_file:
       - .env
@@ -54,7 +54,7 @@ services:
       - workadventure-net
 
   map-storage:
-    image: thecodingmachine/workadventure-map-storage:latest
+    image: ghcr.io/workadventure/map-storage:latest
     restart: always
     env_file:
       - .env
