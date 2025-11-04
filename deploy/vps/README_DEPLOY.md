@@ -45,3 +45,8 @@ Depois da instalação, confirme se o plugin do Docker Compose V2 está disponí
 - Subir stack:
   docker compose up -d
 - Depois configurar SSL (vamos adicionar Nginx + Certbot em etapa seguinte).
+
+## Editar .env após o clone da VPS
+
+Este diretório já contém um arquivo `.env` com valores padrão automáticos.
+Após clonar o repositório na VPS, você pode (e deve) editar o arquivo `deploy/vps/.env` para ajustar domínio, credenciais do TURN e chaves, se necessário.
