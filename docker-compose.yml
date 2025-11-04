@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+  play:
+    image: thecodingmachine/workadventure-play:latest
+    restart: always
+    environment:
+      DOMAIN: ${DOMAIN}
+      PUSHER_URL: "https://pusher.${DOMAIN}"
+      ROOM_API_URL: "https://api.${DOMAIN}"
+      JITSI_HOST: meet.jit.si
+    ports:
+      - "3000:3000"
+
+  pusher:
+    image: thecodingmachine/workadventure-pusher:latest
+    restart: always
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports:
+      - "8080:8080"
+
+  room-api:
+    image: thecodingmachine/workadventure-room-api:latest
+    restart: always
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports:
+      - "9000:9000"
+
+  map-storage:
+    image: thecodingmachine/workadventure-map-storage:latest
+    restart: always
+    environment:
+      BASE_URL: "https://maps.${DOMAIN}"
+    ports:
+      - "8081:80"
+
+  coturn:
+    image: instrumentisto/coturn
+    restart: always
+    command:
+      - "--no-auth"
+      - "--no-cli"
+      - "--no-tls"
+      - "--no-dtls"
+      - "--listening-port=3478"
