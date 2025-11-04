@@ -28,7 +28,7 @@ services:
       - workadventure-net
 
   frontend:
-    image: ghcr.io/thecodingmachine/workadventure-play:3.8.4
+    image: ghcr.io/thecodingmachine/workadventure-front:3.8.4
     restart: always
     env_file:
       - ./.env
