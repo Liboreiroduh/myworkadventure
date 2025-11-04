@@ -6,7 +6,7 @@ networks:
 
 services:
   traefik:
-    image: traefik:v3.1
+    image: traefik:v2.10
     restart: always
     command:
       - "--providers.docker=true"
@@ -28,7 +28,7 @@ services:
       - workadventure-net
 
   frontend:
-    image: ghcr.io/thecodingmachine/workadventure-play:2.0.0
+    image: ghcr.io/thecodingmachine/workadventure-play:3.8.4
     restart: always
     env_file:
       - ./.env
@@ -51,7 +51,7 @@ services:
       - workadventure-net
 
   pusher:
-    image: ghcr.io/thecodingmachine/workadventure-pusher:2.0.0
+    image: ghcr.io/thecodingmachine/workadventure-pusher:3.8.4
     restart: always
     env_file:
       - ./.env
@@ -97,7 +97,7 @@ services:
       - workadventure-net
 
   admin:
-    image: ghcr.io/thecodingmachine/workadventure-admin:2.0.0
+    image: ghcr.io/thecodingmachine/workadventure-admin:3.8.4
     restart: always
     env_file:
       - ./.env
