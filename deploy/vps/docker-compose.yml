@@ -15,9 +15,6 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.tlschallenge=true"
-      - "--certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.email=${EMAIL}"
-      - "--certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
       - "443:443"
@@ -28,7 +25,7 @@ services:
       - workadventure-net
 
   frontend:
-    image: ghcr.io/thecodingmachine/workadventure-front:3.8.4
+    image: ghcr.io/workadventure/workadventure-front:latest
     restart: always
     env_file:
       - ./.env
@@ -51,7 +48,7 @@ services:
       - workadventure-net
 
   pusher:
-    image: ghcr.io/thecodingmachine/workadventure-pusher:3.8.4
+    image: ghcr.io/workadventure/workadventure-pusher:latest
     restart: always
     env_file:
       - ./.env
@@ -74,7 +71,7 @@ services:
       - workadventure-net
 
   back:
-    image: ghcr.io/thecodingmachine/workadventure-back:3.8.4
+    image: ghcr.io/workadventure/workadventure-back:latest
     restart: always
     env_file:
       - ./.env
@@ -97,7 +94,7 @@ services:
       - workadventure-net
 
   admin:
-    image: ghcr.io/thecodingmachine/workadventure-admin-back:3.8.4
+    image: ghcr.io/workadventure/workadventure-admin-back:latest
     restart: always
     env_file:
       - ./.env
